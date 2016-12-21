@@ -17,10 +17,8 @@ class App extends Component {
 					<Router history={browserHistory}>
 						<Route path="/" component={PageLayout}>
 							<IndexRoute component={Home}/>
-							<Route path="/books">
-								<IndexRoute component={Home}/>
-								<Route path="/books/:bookId" component={Book} />
-							</Route>
+							<Route path="/books" component={Home}/>
+							<Route path="/books/:bookId" component={Book} />
 						</Route>
 					</Router>
 				</ApolloProvider>
