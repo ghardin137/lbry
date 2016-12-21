@@ -1,0 +1,22 @@
+.App {
+	display: flex;
+	flex-direction: column;
+	flex-wrap: nowrap;
+	width: 1200px;
+	margin: 0 auto;
+}
+
+.logo {
+	text-decoration: none;
+	font-size: 2em;
+	display: inline-block;
+	padding: .5rem 0 .5rem 1rem;
+}
+
+.toolbar {
+	border-bottom: 1px solid #333;
+}
+
+.body {
+	
+}
