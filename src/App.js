@@ -19,6 +19,7 @@ class App extends Component {
 							<IndexRoute component={Home}/>
 							<Route path="/books" component={Home}/>
 							<Route path="/books/:bookId" component={Book} />
+							<Route path="/register" component={Home}/>
 						</Route>
 					</Router>
 				</ApolloProvider>

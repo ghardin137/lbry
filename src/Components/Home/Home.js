@@ -6,6 +6,16 @@ import './Home.css';
 import BookListing from '../BookListing';
 
 class Home extends Component {
+	
+	constructor() {
+		super();
+		this.requestBook.bind(this);
+	}
+	
+	requestBook(bookId) {
+		console.log(bookId);
+	}
+	
 	render() {
 		let books = [];
 		let list = null;
@@ -13,7 +23,7 @@ class Home extends Component {
 			books = this.props.data.viewer.allBooks.edges;
 			list = (<ul className="books">
 				{books.map((book, index) => {
-					return <BookListing key={index} book={book.node} />;
+					return <BookListing key={index} book={book.node} requestBook={this.requestBook} />;
 				})}
 			</ul>);
 		} else {
@@ -31,22 +41,35 @@ class Home extends Component {
 }
 
 const query = gql`query BookQuery {
-  viewer {
-    allBooks {
-      edges {
-        node {
-          id,
-          title,
-          author {
-            id,
-            firstName,
-            lastName,
-            suffix
-          }
-        }
-      }
-    }
-  }
+	viewer {
+		allBooks {
+			edges {
+				node {
+					id,
+					title,
+					author {
+						id,
+						firstName,
+						lastName,
+						suffix
+					},
+					currentHolder {
+						id
+					},
+					bookRequests(where: { complete: { ne:true } }, orderBy:{ field: createdAt, direction: DESC }) {
+						edges {
+							node {
+								createdAt
+								requestedBy {
+									id,
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
 }`;
 
 export default graphql(query)(Home);

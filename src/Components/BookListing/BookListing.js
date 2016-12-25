@@ -1,17 +1,52 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router';
+import { connect } from 'react-redux';
 import './BookListing.css';
 
-export default class BookListing extends Component {
+class BookListing extends Component {
 	render() {
-		const { book } = this.props;
+		const { book, currentUser, requestBook } = this.props;
 		const bookUrl = '/books/' + book.id;
-		console.log(this.props);
+		let actions = null;
+		if (currentUser.id && book.currentHolder.id !== currentUser.id) {
+			let requested = false;
+			if(book.bookRequests.edges.length > 0) {
+				requested = book.bookRequests.edges.reduce((a, b) => {
+					if(b.requesedBy.id === currentUser.id) {
+						return a || true;
+					}
+					return a || false;
+				});
+			}
+			if( !requested ) {
+				actions = (
+					<div className="bookActions">
+						<button onClick={() => requestBook(book.id)}>Request</button>
+					</div>
+				);
+			} else {
+				actions = (
+					<div className="bookActions">
+						<button className="requested">Requested!</button>
+					</div>
+				);
+			}
+		}
 		return (
-			<li>
-				<Link className="bookTitle" to={bookUrl}>{book.title}</Link>
-				<p>{book.author.firstName} {book.author.lastName}</p>
+			<li className="bookListing">
+				<div className="bookDetails">
+					<Link className="bookTitle" to={bookUrl}>{book.title}</Link>
+					<p>{book.author.firstName} {book.author.lastName}</p>
+				</div>
+				{actions}
 			</li>
 		);
 	}
 };
+
+export default connect((state) => {
+	const { currentUser } = state;
+	return {
+		currentUser
+	};
+})(BookListing);

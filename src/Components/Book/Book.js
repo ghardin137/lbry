@@ -19,12 +19,14 @@ class Book extends Component {
 			);
 		}
 		return (
-			{display}
+			<div>
+				{display}
+			</div>
 		);
 	}
 }
 
-const query = gql`query BookQuery($bookId: String!){
+const query = gql`query BookQuery($bookId: ID!){
   getBook(id:$bookId){
     title
     author {
@@ -46,4 +48,13 @@ const query = gql`query BookQuery($bookId: String!){
   }
 }`;
 
-export default graphql(query)(Book);
+export default graphql(query, 
+	{ 
+		options: (ownProps) => {
+			return {
+				variables: {
+					bookId: ownProps.params.bookId
+				}
+			};
+		}
+	})(Book);

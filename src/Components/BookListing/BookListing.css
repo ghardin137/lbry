@@ -4,3 +4,30 @@
 	font-size:1.5em;
 	font-weight: bold;
 }
+
+.bookListing {
+	display:flex;
+	align-content:stretch;
+}
+
+.bookDetails {
+	flex:1;
+	
+}
+
+.bookActions {
+	flex:1;
+	text-align:right;
+}
+
+.bookActions button {
+	background-color: blue;
+	border-color:blue;
+	color:white;
+	font-size: 1em;
+	padding: .5em 1em;
+}
+.bookActions .requested {
+	color: blue;
+	background-color: white;
+}
