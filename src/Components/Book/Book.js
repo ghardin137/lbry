@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { graphql } from 'react-apollo';
-import gql from 'graphql-tag';
+import { getBookQueryWithFragment } from './Book.queries';
 import './Book.css';
 
 class Book extends Component {
@@ -26,34 +26,12 @@ class Book extends Component {
 	}
 }
 
-const query = gql`query BookQuery($bookId: ID!){
-  getBook(id:$bookId){
-    title
-    author {
-      id
-    }
-    pages
-    bookRequests {
-      edges {
-        node {
-          createdAt
-          modifiedAt
-          complete
-          requestedBy {
-            username
-          }
-        }
-      }
-    }
-  }
-}`;
-
-export default graphql(query, 
+export default graphql(getBookQueryWithFragment, 
 	{ 
 		options: (ownProps) => {
 			return {
 				variables: {
-					bookId: ownProps.params.bookId
+					id: ownProps.params.bookId
 				}
 			};
 		}

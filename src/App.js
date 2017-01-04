@@ -6,6 +6,7 @@ import {getInitialState} from './store/getInitialState';
 import PageLayout from './Components/PageLayout';
 import Home from './Components/Home';
 import Book from './Components/Book';
+import RegisterUser from './Components/RegisterUser';
 
 const {store, client} = configureStore(getInitialState());
 
@@ -19,7 +20,7 @@ class App extends Component {
 							<IndexRoute component={Home}/>
 							<Route path="/books" component={Home}/>
 							<Route path="/books/:bookId" component={Book} />
-							<Route path="/register" component={Home}/>
+							<Route path="/register" component={RegisterUser}/>
 						</Route>
 					</Router>
 				</ApolloProvider>

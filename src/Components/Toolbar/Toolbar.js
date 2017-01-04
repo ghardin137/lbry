@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { graphql } from 'react-apollo';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
-import { reduxForm, Field, formValueSelector } from 'redux-form';
+import { reduxForm, Field } from 'redux-form';
 import { Link } from 'react-router';
 import gql from 'graphql-tag';
 import { loginUserAction, logoutUserAction } from '../../actions/user';
@@ -16,8 +16,10 @@ class Toolbar extends Component {
 		this.logoutUser = this.logoutUser.bind(this);
 	}
 	
-	loginUser() {
-		const { loginUserMutation, username, password, dispatch } = this.props;
+	loginUser(values) {
+		console.log('values', values);
+		const { username, password } = values;
+		const { loginUserMutation, dispatch } = this.props;
 		if(username && password) {
 			const loginVariables = { 
 				variables : {
@@ -42,13 +44,13 @@ class Toolbar extends Component {
 	}
 	
 	render() {
-		const { pristine, submitting, currentUser } = this.props;
+		const { pristine, submitting, currentUser, handleSubmit } = this.props;
 		let userArea = (
 			<div className="loginForm">
-				<form name="loginForm" onSubmit={this.loginUser}>
+				<form name="loginForm" onSubmit={handleSubmit(this.loginUser)}>
 					<Field name="username" id="username" component="input" type="text" placeholder="Username" />
 					<Field name="password" id="password" component="input" type="password" placeholder="Password"/>
-					<button type="button" disabled={pristine || submitting} onClick={this.loginUser}>Login</button>
+					<button type="submit" disabled={pristine || submitting}>Login</button>
 					<Link to="/register">Register</Link>
 				</form>
 			</div>
@@ -83,8 +85,6 @@ const LOGIN_USER_MUTATION = gql`mutation LoginUser($user: LoginUserInput!){
 	}
 }`;
 
-const loginFormSelector = formValueSelector('loginForm');
-
 const validate = (values) => {
 	const errors = {}
 	if (!values.username) {
@@ -110,10 +110,7 @@ const withMutations = compose(
 	}),
 	connect((state) => {
 		const { currentUser } = state;
-		const { username, password } = loginFormSelector(state, 'username', 'password');
 		return {
-			username,
-			password,
 			currentUser
 		}
 	})
