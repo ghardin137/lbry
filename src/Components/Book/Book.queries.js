@@ -2,6 +2,7 @@ import gql from 'graphql-tag';
 
 export const bookDetails = gql`
 	fragment bookDetails on Book {
+		id,
 		title,
 		author {
 			id,
@@ -9,6 +10,7 @@ export const bookDetails = gql`
 			lastName,
 			suffix
 		},
+		pages,
 		currentHolder {
 			id
 		},
@@ -54,6 +56,15 @@ export const getBookQueryWithFragment = gql`query BookQuery($id: ID!) {
 }
 ${bookDetails}`;
 
-// export const requestBookQuery = gql``;
-// 
+export const requestBookQuery = gql`mutation RequestBook($input: CreateBookRequestInput!) {
+	createBookRequest(input: $input) {
+		changedBookRequest {
+			createdAt,
+			requestedBy {
+				id
+			}
+		}
+	}
+}`;
+ 
 // export const updateBookQuery = gql``;

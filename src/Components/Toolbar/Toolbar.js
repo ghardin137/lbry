@@ -55,7 +55,7 @@ class Toolbar extends Component {
 				</form>
 			</div>
 		);
-		if (currentUser.id) {
+		if (currentUser && currentUser.id) {
 			userArea = (
 				<div className="loginForm">
 					Welcome {currentUser.username}! <button className="buttonLink" onClick={this.logoutUser}>Logout</button>
@@ -109,6 +109,7 @@ const withMutations = compose(
 		validate
 	}),
 	connect((state) => {
+		console.log(state);
 		const { currentUser } = state;
 		return {
 			currentUser

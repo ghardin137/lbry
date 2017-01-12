@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
+// import { bookDetails } from '../Book/Book.queries';
 import './Home.css';
 
 import BookListing from '../BookListing';

@@ -1,4 +1,7 @@
 /* global window */
 export const getInitialState = () => {
-	return {};
+	const currentUser = JSON.parse(sessionStorage.getItem('localUser'));
+	return {
+		currentUser
+	};
 };
