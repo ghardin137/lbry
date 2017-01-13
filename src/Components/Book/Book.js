@@ -27,7 +27,6 @@ class Book extends Component {
 	
 	render() {
 		let display = null;
-		console.log(this.props);
 		if (this.props.data.getBook) {
 			const currentUser = this.props.currentUser;
 			const book = this.props.data.getBook;

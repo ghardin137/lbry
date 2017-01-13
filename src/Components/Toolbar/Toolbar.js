@@ -109,7 +109,6 @@ const withMutations = compose(
 		validate
 	}),
 	connect((state) => {
-		console.log(state);
 		const { currentUser } = state;
 		return {
 			currentUser

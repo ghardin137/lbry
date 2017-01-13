@@ -17,7 +17,8 @@ export const bookDetails = gql`
 		bookRequests(where: { complete: { ne:true } }, orderBy:{ field: createdAt, direction: DESC }) {
 			edges {
 				node {
-					createdAt
+					id,
+					createdAt,
 					requestedBy {
 						id
 					}
@@ -59,6 +60,7 @@ ${bookDetails}`;
 export const requestBookQuery = gql`mutation RequestBook($input: CreateBookRequestInput!) {
 	createBookRequest(input: $input) {
 		changedBookRequest {
+			id,
 			createdAt,
 			requestedBy {
 				id
