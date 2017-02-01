@@ -49,7 +49,7 @@
     "whatwg-fetch": "1.0.0"
   },
   "dependencies": {
-    "apollo-client": "^0.5.6",
+    "apollo-client": "^0.5.21",
     "graphql-tag": "^1.0.0",
     "immutability-helper": "^2.1.0",
     "react": "^15.4.1",

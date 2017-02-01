@@ -7,26 +7,27 @@ import { getBookQueryWithFragment, requestBookQuery } from './Book.queries';
 import './Book.css';
 
 class Book extends Component {
-	
+
 	constructor() {
 		super();
 		this.requestBook = this.requestBook.bind(this);
 	}
-	
+
 	requestBook() {
 		const { requestBookMutation, currentUser, data: { getBook } } = this.props;
 		const requestedById = currentUser.id;
 		const bookRequestedId = getBook.id;
-		requestBookMutation({ 
+		requestBookMutation({
 			requestedById,
 			bookRequestedId,
 		}).then((data) => {
 			console.log(data);
 		});
 	}
-	
+
 	render() {
 		let display = null;
+        console.log(this.props.data.getBook);
 		if (this.props.data.getBook) {
 			const currentUser = this.props.currentUser;
 			const book = this.props.data.getBook;
@@ -76,8 +77,8 @@ class Book extends Component {
 }
 
 const withApollo = compose(
-	graphql(getBookQueryWithFragment, 
-		{ 
+	graphql(getBookQueryWithFragment,
+		{
 			options: (ownProps) => {
 				return {
 					variables: {
@@ -92,8 +93,8 @@ const withApollo = compose(
 			return {
 				requestBookMutation({ requestedById, bookRequestedId }) {
 					return mutate({
-						variables: { 
-							input: { 
+						variables: {
+							input: {
 								requestedById,
 								bookRequestedId,
 								complete: false
@@ -106,7 +107,7 @@ const withApollo = compose(
 									getBook: {
 										bookRequests: {
 											edges: {
-												$unshift: [{ node: mutationResult.data.createBookRequest.changedBookRequest}]
+												$unshift: [{ node: mutationResult.data.createBookRequest.changedBookRequest, __typename: "BookRequestEdge"}]
 											}
 										}
 									}
